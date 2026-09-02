@@ -26,6 +26,16 @@
   --radius-2xl: calc(var(--radius) + 8px);
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
+  --font-serif: "Cormorant Garamond", serif;
+  --font-sans: "Jost", sans-serif;
+  --color-velvet: var(--velvet);
+  --color-plum: var(--plum);
+  --color-wine: var(--wine);
+  --color-glow: var(--glow);
+  --color-brass: var(--brass);
+  --color-brasslight: var(--brasslight);
+  --color-cream: var(--cream);
+  --color-ash: var(--ash);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -60,6 +70,17 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 }
+
+@utility spotlight {
+  background:
+    radial-gradient(120% 90% at 50% -10%, oklch(0.74 0.11 85 / 0.28), transparent 55%),
+    radial-gradient(80% 70% at 50% 0%, var(--wine) 0%, var(--plum) 40%, var(--velvet) 100%);
+}
+
+@utility hairline {
+  box-shadow: inset 0 0 0 1px oklch(0.74 0.11 85 / 0.25);
+}
+
 
 :root {
   --radius: 0.625rem;
