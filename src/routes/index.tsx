@@ -214,8 +214,10 @@ function Index() {
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <div className="flex items-end justify-between mb-12">
             <div>
-              <p className="text-brass text-[12px] tracking-[0.4em] uppercase mb-4">Două game</p>
-              <h2 className="font-serif text-cream text-5xl tracking-tight">Colecțiile</h2>
+              <p className="text-brass text-[12px] tracking-[0.4em] uppercase mb-4">Universul ANELYSÉ</p>
+              <h2 className="font-serif text-cream text-5xl tracking-tight">
+                Două colecții. Aceeași viziune a excelenței.
+              </h2>
             </div>
             <a
               className="hidden md:block text-cream/60 hover:text-brasslight text-[12px] tracking-[0.2em] uppercase transition-colors"
@@ -242,16 +244,17 @@ function Index() {
               <div className="absolute inset-0 bg-gradient-to-t from-velvet via-velvet/50 to-transparent" />
               <div className="relative">
                 <span className="inline-block text-[11px] tracking-[0.35em] uppercase text-velvet bg-brass px-3 py-1">
-                  Premium
+                  Luxury Collection
                 </span>
                 <h3 className="mt-5 font-serif text-4xl text-cream group-hover:text-brasslight transition-colors">
                   ANELYSÉ Signature
                 </h3>
                 <p className="mt-3 text-cream/70 font-light text-sm max-w-xs">
-                  Volume dense, sculptate, în evantaie așezate manual.
+                  Volum dramatic și densitate magnetică. Evantaie sculptate și așezate
+                  manual pentru o prezență impunătoare.
                 </p>
                 <span className="mt-6 inline-flex items-center gap-2 text-brasslight text-[12px] tracking-[0.2em] uppercase">
-                  Explorează →
+                  Descoperă colecția →
                 </span>
               </div>
             </a>
@@ -272,16 +275,17 @@ function Index() {
               <div className="absolute inset-0 bg-gradient-to-t from-velvet via-velvet/55 to-transparent" />
               <div className="relative">
                 <span className="inline-block text-[11px] tracking-[0.35em] uppercase text-velvet bg-brass px-3 py-1">
-                  Eco
+                  Eco-Conscious
                 </span>
                 <h3 className="mt-5 font-serif text-4xl text-cream group-hover:text-brasslight transition-colors">
                   ANELYSÉ Pure
                 </h3>
                 <p className="mt-3 text-cream/70 font-light text-sm max-w-xs">
-                  Fire ușoare ca pana, vegane și fără cruzime.
+                  Naturalețe absolută. Fire ultra-ușoare, 100% vegane și cruelty-free,
+                  create pentru un lux sustenabil.
                 </p>
                 <span className="mt-6 inline-flex items-center gap-2 text-brasslight text-[12px] tracking-[0.2em] uppercase">
-                  Explorează →
+                  Descoperă colecția →
                 </span>
               </div>
             </a>
@@ -293,7 +297,7 @@ function Index() {
       <section id="produse" className="bg-plum py-24">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <div className="text-center mb-14">
-            <p className="text-brass text-[12px] tracking-[0.4em] uppercase mb-4">Cele mai dorite</p>
+            <p className="text-brass text-[12px] tracking-[0.4em] uppercase mb-4">Selecția exclusivistă</p>
             <h2 className="font-serif text-cream text-5xl tracking-tight">Piese semnătură</h2>
           </div>
 
@@ -330,7 +334,7 @@ function Index() {
                       onClick={() => addToBag(product.id)}
                       className="text-[11px] tracking-[0.2em] uppercase text-cream/70 hover:text-brasslight border-b border-brass/40 pb-0.5 transition-colors"
                     >
-                      {bag[product.id] ? `În coș (${bag[product.id]})` : "Adaugă"}
+                      {bag[product.id] ? `În coș (${bag[product.id]})` : "Adaugă în coș"}
                     </button>
                   </div>
                 </div>
@@ -345,14 +349,16 @@ function Index() {
         <div className="max-w-7xl mx-auto px-6 lg:px-10 grid lg:grid-cols-12 gap-12">
           <div className="lg:col-span-5">
             <p className="text-brass text-[12px] tracking-[0.4em] uppercase mb-4">
-              Pentru lash artiste
+              Dedicat lash artiștilor
             </p>
             <h2 className="font-serif text-cream text-4xl lg:text-5xl leading-tight tracking-tight">
-              Curl, grosime și lungime, fără aproximări
+              Arhitectura privirii. Precizie fără compromisuri.
             </h2>
             <p className="mt-6 text-ash font-light leading-relaxed max-w-md">
-              Fiecare tray ANELYSÉ vine cu fișă tehnică. Compari firele, construiești mapping-ul
-              și repeți tehnica identic — de la un look natural până la volume sculptate.
+              Fiecare paletă ANELYSÉ este un instrument de înaltă precizie, însoțit de o fișă
+              tehnică detaliată. Compară firele, construiește mapping-uri impecabile și replică
+              perfecțiunea de fiecare dată — de la seturi clasice și naturale, până la
+              mega-volume sculptate.
             </p>
           </div>
           <div className="lg:col-span-7">
@@ -362,7 +368,7 @@ function Index() {
                 ["Curls", "B · C · CC · D", "C · CC"],
                 ["Grosimi", "0.05 – 0.25 mm", "0.07 – 0.18 mm"],
                 ["Lungimi", "8 – 15 mm", "9 – 13 mm"],
-                ["Finisaj", "Lucios, mătase", "Mat, PBT vegan"],
+                ["Finisaj", "Lucios, efect de mătase", "Mat, PBT premium vegan"],
               ].map((row, index) => (
                 <div
                   key={row[0]}
@@ -466,7 +472,7 @@ function Index() {
               </li>
               <li>
                 <a href="#pure" className="hover:text-brasslight transition-colors">
-                  Fără cruzime
+                  Cruelty-free
                 </a>
               </li>
             </ul>
