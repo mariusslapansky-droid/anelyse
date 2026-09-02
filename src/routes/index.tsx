@@ -154,16 +154,17 @@ function Index() {
         <div className="max-w-7xl mx-auto px-6 lg:px-10 py-20 lg:py-28 grid lg:grid-cols-12 gap-12 items-center">
           <div className="lg:col-span-6">
             <p className="text-brass text-[12px] tracking-[0.45em] uppercase mb-7">
-              Atelierul genelor de lux
+              Arta privirii perfecte
             </p>
             <h1 className="font-serif text-cream text-6xl lg:text-7xl leading-[0.95] tracking-tight">
-              Privirea, <span className="italic text-brasslight">iluminată</span> de lumină
-              de catifea.
+              Eleganță <span className="italic text-brasslight">absolută</span> la fiecare
+              clipire.
             </h1>
             <p className="mt-8 text-ash text-lg font-light leading-relaxed max-w-md">
-              Extensii finisate manual, în două game — opulenta{" "}
-              <span className="text-cream">SIGNATURE</span> și ușoara{" "}
-              <span className="text-cream">PURE</span>. Purtate ca o ținută de seară.
+              Extensii de gene lucrate manual, concepute pentru a deveni semnătura ta. Alege
+              intensitatea colecției de lux <span className="text-cream">SIGNATURE</span> sau
+              naturalețea sustenabilă a gamei <span className="text-cream">PURE</span>. Un
+              detaliu invizibil, prețios ca o rochie de seară.
             </p>
             <div className="mt-10 flex flex-wrap items-center gap-4">
               <a
@@ -186,13 +187,13 @@ function Index() {
               </div>
               <div className="w-px h-9 bg-brass/30" />
               <div>
-                <span className="block font-serif text-2xl text-cream">Manual</span>
-                <span className="text-[11px] tracking-[0.2em] uppercase">Finisate</span>
+                <span className="block font-serif text-2xl text-cream">Lucrate</span>
+                <span className="text-[11px] tracking-[0.2em] uppercase">Manual</span>
               </div>
               <div className="w-px h-9 bg-brass/30" />
               <div>
-                <span className="block font-serif text-2xl text-cream">6–8</span>
-                <span className="text-[11px] tracking-[0.2em] uppercase">Săptămâni</span>
+                <span className="block font-serif text-2xl text-cream">6–8 săptămâni</span>
+                <span className="text-[11px] tracking-[0.2em] uppercase">Rezistență</span>
               </div>
             </div>
           </div>
