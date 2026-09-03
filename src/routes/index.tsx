@@ -1,9 +1,19 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
+import {
+  ArrowRight,
+  CreditCard,
+  RotateCcw,
+  ShieldCheck,
+  ShoppingBag,
+  Truck,
+  User,
+} from "lucide-react";
 
 import heroPortrait from "@/assets/hero-portrait.jpg";
 import collectionSignature from "@/assets/collection-signature.jpg";
 import collectionPure from "@/assets/collection-pure.jpg";
+import macroLash from "@/assets/macro-lash.jpg";
 import product1 from "@/assets/product-1.jpg";
 import product2 from "@/assets/product-2.jpg";
 import product3 from "@/assets/product-3.jpg";
@@ -78,10 +88,38 @@ const products: Product[] = [
   },
 ];
 
+const testimonials = [
+  {
+    quote:
+      "Cea mai bună retenție pe care am obținut-o vreodată. Colecția Signature este absolut senzațională.",
+    author: "Maria",
+    role: "Lash Artist · București",
+  },
+  {
+    quote:
+      "Evantaiele se deschid perfect, nu se destramă și rămân impecabile până la refill. Clientele observă diferența.",
+    author: "Ioana",
+    role: "Trainer & Lash Artist · Cluj",
+  },
+  {
+    quote:
+      "Gama Pure este exact ce cereau clientele mele: ultra-ușoară, naturală și vegană, fără să pierdem din lux.",
+    author: "Alexandra",
+    role: "Studio Owner · Timișoara",
+  },
+];
+
+const usps = [
+  { icon: Truck, label: "Livrare gratuită peste 350 RON" },
+  { icon: ShieldCheck, label: "Plăți securizate" },
+  { icon: RotateCcw, label: "Retur în 30 de zile" },
+];
+
 function Index() {
   const [bag, setBag] = useState<Record<string, number>>({});
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
+  const [slide, setSlide] = useState(0);
 
   const bagCount = useMemo(
     () => Object.values(bag).reduce((sum, qty) => sum + qty, 0),
@@ -98,6 +136,8 @@ function Index() {
 
   const addToBag = (id: string) =>
     setBag((prev) => ({ ...prev, [id]: (prev[id] ?? 0) + 1 }));
+
+  const active = testimonials[slide];
 
   return (
     <div className="bg-velvet">
@@ -123,12 +163,22 @@ function Index() {
               Jurnal
             </a>
           </nav>
-          <div className="flex items-center gap-4">
-            <button className="hidden sm:block text-cream/70 hover:text-brasslight text-[13px] tracking-[0.15em] uppercase transition-colors">
-              Cont
+          <div className="flex items-center gap-2 sm:gap-4">
+            <button
+              aria-label="Contul meu"
+              className="group flex items-center gap-2 px-3 py-2 text-cream/70 hover:text-brasslight transition-colors"
+            >
+              <User className="w-[18px] h-[18px]" strokeWidth={1.25} />
+              <span className="hidden sm:inline text-[12px] tracking-[0.2em] uppercase">
+                Cont
+              </span>
             </button>
-            <button className="relative border border-brass/50 px-5 py-2.5 text-brasslight text-[12px] tracking-[0.2em] uppercase hover:bg-brass hover:text-velvet transition-colors">
-              Coș
+            <button
+              aria-label={`Coș de cumpărături, ${bagCount} produse`}
+              className="relative flex items-center gap-2 border border-brass/50 px-4 sm:px-5 py-2.5 text-brasslight text-[12px] tracking-[0.2em] uppercase hover:bg-brass hover:text-velvet transition-colors"
+            >
+              <ShoppingBag className="w-[18px] h-[18px]" strokeWidth={1.25} />
+              <span className="hidden sm:inline">Coș</span>
               {bagCount > 0 && (
                 <span className="absolute -top-2 -right-2 bg-brass text-velvet text-[10px] w-5 h-5 grid place-items-center rounded-full">
                   {bagCount}
@@ -137,6 +187,19 @@ function Index() {
             </button>
           </div>
         </div>
+
+        {/* USP BAR */}
+        <div className="border-t border-brass/15 bg-plum/50">
+          <div className="max-w-7xl mx-auto px-6 lg:px-10 py-2.5 flex items-center justify-center gap-6 sm:gap-10 text-[10px] sm:text-[11px] tracking-[0.22em] uppercase text-cream/65 overflow-x-auto">
+            {usps.map(({ icon: Icon, label }) => (
+              <span key={label} className="flex items-center gap-2 whitespace-nowrap">
+                <Icon className="w-3.5 h-3.5 text-brass" strokeWidth={1.25} />
+                {label}
+              </span>
+            ))}
+          </div>
+        </div>
+
         {bagCount > 0 && (
           <div className="border-t border-brass/15 bg-plum/70">
             <div className="max-w-7xl mx-auto px-6 lg:px-10 py-2.5 flex items-center justify-between text-[11px] tracking-[0.2em] uppercase text-cream/80">
@@ -151,7 +214,7 @@ function Index() {
 
       {/* HERO */}
       <section id="top" className="spotlight relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-20 lg:py-28 grid lg:grid-cols-12 gap-12 items-center">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-24 lg:py-36 grid lg:grid-cols-12 gap-14 lg:gap-16 items-center">
           <div className="lg:col-span-6">
             <p className="text-brass text-[12px] tracking-[0.45em] uppercase mb-7">
               Arta privirii perfecte
@@ -198,21 +261,23 @@ function Index() {
             </div>
           </div>
           <div className="lg:col-span-6">
-            <img
-              src={heroPortrait}
-              alt="Portret editorial cu extensii de gene ANELYSÉ pe fundal de catifea"
-              width={1088}
-              height={1280}
-              className="w-full aspect-[4/5] object-cover rounded-sm hairline"
-            />
+            <div className="overflow-hidden rounded-sm hairline">
+              <img
+                src={heroPortrait}
+                alt="Portret editorial cu extensii de gene ANELYSÉ pe fundal de catifea"
+                width={1088}
+                height={1280}
+                className="w-full aspect-[4/5] object-cover transition-transform duration-[1200ms] ease-out hover:scale-[1.04]"
+              />
+            </div>
           </div>
         </div>
       </section>
 
       {/* COLLECTIONS */}
-      <section className="bg-velvet py-24">
+      <section className="bg-velvet py-28 lg:py-36">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
-          <div className="flex items-end justify-between mb-12">
+          <div className="flex items-end justify-between mb-16">
             <div>
               <p className="text-brass text-[12px] tracking-[0.4em] uppercase mb-4">Universul ANELYSÉ</p>
               <h2 className="font-serif text-cream text-5xl tracking-tight">
@@ -231,7 +296,7 @@ function Index() {
             <a
               id="signature"
               href="#produse"
-              className="group relative overflow-hidden bg-wine hairline rounded-sm p-10 min-h-[340px] flex flex-col justify-end"
+              className="group relative overflow-hidden bg-wine hairline rounded-sm p-10 min-h-[380px] flex flex-col justify-end"
             >
               <img
                 src={collectionSignature}
@@ -239,7 +304,7 @@ function Index() {
                 loading="lazy"
                 width={900}
                 height={900}
-                className="absolute inset-0 w-full h-full object-cover opacity-60 transition-transform duration-700 group-hover:scale-105"
+                className="absolute inset-0 w-full h-full object-cover opacity-60 transition-transform duration-[1400ms] ease-out group-hover:scale-[1.06]"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-velvet via-velvet/50 to-transparent" />
               <div className="relative">
@@ -254,7 +319,8 @@ function Index() {
                   manual pentru o prezență impunătoare.
                 </p>
                 <span className="mt-6 inline-flex items-center gap-2 text-brasslight text-[12px] tracking-[0.2em] uppercase">
-                  Descoperă colecția →
+                  Descoperă colecția
+                  <ArrowRight className="w-4 h-4 transition-transform duration-500 group-hover:translate-x-1" strokeWidth={1.25} />
                 </span>
               </div>
             </a>
@@ -262,7 +328,7 @@ function Index() {
             <a
               id="pure"
               href="#produse"
-              className="group relative overflow-hidden bg-plum hairline rounded-sm p-10 min-h-[340px] flex flex-col justify-end"
+              className="group relative overflow-hidden bg-plum hairline rounded-sm p-10 min-h-[380px] flex flex-col justify-end"
             >
               <img
                 src={collectionPure}
@@ -270,7 +336,7 @@ function Index() {
                 loading="lazy"
                 width={912}
                 height={912}
-                className="absolute inset-0 w-full h-full object-cover opacity-45 transition-transform duration-700 group-hover:scale-105"
+                className="absolute inset-0 w-full h-full object-cover opacity-45 transition-transform duration-[1400ms] ease-out group-hover:scale-[1.06]"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-velvet via-velvet/55 to-transparent" />
               <div className="relative">
@@ -285,7 +351,8 @@ function Index() {
                   create pentru un lux sustenabil.
                 </p>
                 <span className="mt-6 inline-flex items-center gap-2 text-brasslight text-[12px] tracking-[0.2em] uppercase">
-                  Descoperă colecția →
+                  Descoperă colecția
+                  <ArrowRight className="w-4 h-4 transition-transform duration-500 group-hover:translate-x-1" strokeWidth={1.25} />
                 </span>
               </div>
             </a>
@@ -293,10 +360,39 @@ function Index() {
         </div>
       </section>
 
+      {/* CRAFTSMANSHIP — MACRO BAND */}
+      <section className="relative overflow-hidden">
+        <img
+          src={macroLash}
+          alt="Macro cu textura firului unui evantai de gene ANELYSÉ"
+          loading="lazy"
+          width={1920}
+          height={1088}
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-velvet via-velvet/85 to-velvet/25" />
+        <div className="relative max-w-7xl mx-auto px-6 lg:px-10 py-28 lg:py-40">
+          <div className="max-w-xl">
+            <p className="text-brass text-[12px] tracking-[0.45em] uppercase mb-6">
+              Măiestria atelierului
+            </p>
+            <h2 className="font-serif text-cream text-4xl lg:text-5xl leading-tight tracking-tight">
+              Calitatea nu este o <span className="italic text-brasslight">coincidență</span>.
+            </h2>
+            <p className="mt-6 text-ash font-light leading-relaxed">
+              Fiecare evantai este format și fixat la bază cu o precizie milimetrică: se
+              deschide instant, își păstrează forma și nu se destramă nici după săptămâni de
+              purtare. Fir cu fir, control pe fiecare tray — pentru ca rezultatul tău să fie
+              mereu previzibil, impecabil, de lux.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* PRODUCTS */}
-      <section id="produse" className="bg-plum py-24">
+      <section id="produse" className="bg-plum py-28 lg:py-36">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
-          <div className="text-center mb-14">
+          <div className="text-center mb-16">
             <p className="text-brass text-[12px] tracking-[0.4em] uppercase mb-4">Selecția exclusivistă</p>
             <h2 className="font-serif text-cream text-5xl tracking-tight">Piese semnătură</h2>
           </div>
@@ -305,17 +401,23 @@ function Index() {
             {products.map((product) => (
               <div
                 key={product.id}
-                className="group bg-velvet/60 hairline rounded-sm overflow-hidden"
+                className="group bg-velvet/60 hairline rounded-sm overflow-hidden transition-shadow duration-500"
               >
-                <div className="overflow-hidden">
+                <div className="relative overflow-hidden">
                   <img
                     src={product.image}
                     alt={`${product.name} — extensii de gene ANELYSÉ ${product.line}`}
                     loading="lazy"
                     width={800}
                     height={900}
-                    className="aspect-[4/5] w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="aspect-[4/5] w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.06]"
                   />
+                  <button
+                    onClick={() => addToBag(product.id)}
+                    className="absolute inset-x-0 bottom-0 translate-y-full group-hover:translate-y-0 focus-visible:translate-y-0 transition-transform duration-500 ease-out bg-brass/95 text-velvet py-3.5 text-[11px] tracking-[0.25em] uppercase font-medium hidden sm:block"
+                  >
+                    {bag[product.id] ? `În coș (${bag[product.id]})` : "Adaugă în coș"}
+                  </button>
                 </div>
                 <div className="p-6">
                   <div className="flex items-center justify-between">
@@ -326,17 +428,15 @@ function Index() {
                   </div>
                   <h3 className="mt-3 font-serif text-xl text-cream">{product.name}</h3>
                   <p className="mt-1 text-ash text-sm font-light">{product.spec}</p>
-                  <div className="mt-5 flex items-center justify-between">
-                    <span className="font-serif text-2xl text-brasslight">
-                      {product.price} RON
-                    </span>
-                    <button
-                      onClick={() => addToBag(product.id)}
-                      className="text-[11px] tracking-[0.2em] uppercase text-cream/70 hover:text-brasslight border-b border-brass/40 pb-0.5 transition-colors"
-                    >
-                      {bag[product.id] ? `În coș (${bag[product.id]})` : "Adaugă în coș"}
-                    </button>
-                  </div>
+                  <span className="mt-5 block font-serif text-2xl text-brasslight">
+                    {product.price} RON
+                  </span>
+                  <button
+                    onClick={() => addToBag(product.id)}
+                    className="mt-4 w-full border border-brass/45 text-cream/85 py-3 text-[11px] tracking-[0.25em] uppercase hover:bg-brass hover:text-velvet transition-colors"
+                  >
+                    {bag[product.id] ? `În coș (${bag[product.id]})` : "Adaugă în coș"}
+                  </button>
                 </div>
               </div>
             ))}
@@ -344,9 +444,39 @@ function Index() {
         </div>
       </section>
 
+      {/* TESTIMONIALS */}
+      <section className="bg-velvet py-28 lg:py-36">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <p className="text-brass text-[12px] tracking-[0.4em] uppercase mb-10">
+            Ce spun profesioniștii
+          </p>
+          <blockquote className="font-serif text-cream text-3xl lg:text-4xl leading-snug italic">
+            „{active.quote}”
+          </blockquote>
+          <p className="mt-8 text-[11px] tracking-[0.28em] uppercase text-brasslight">
+            {active.author}
+          </p>
+          <p className="mt-2 text-[11px] tracking-[0.2em] uppercase text-ash/80">
+            {active.role}
+          </p>
+          <div className="mt-10 flex items-center justify-center gap-3">
+            {testimonials.map((item, index) => (
+              <button
+                key={item.author}
+                aria-label={`Testimonial ${index + 1}`}
+                onClick={() => setSlide(index)}
+                className={`h-px transition-all duration-500 ${
+                  index === slide ? "w-12 bg-brass" : "w-6 bg-cream/25 hover:bg-cream/50"
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* SPEC COMPARISON */}
-      <section className="bg-velvet py-24">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10 grid lg:grid-cols-12 gap-12">
+      <section className="bg-plum py-28 lg:py-36">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 grid lg:grid-cols-12 gap-14">
           <div className="lg:col-span-5">
             <p className="text-brass text-[12px] tracking-[0.4em] uppercase mb-4">
               Dedicat lash artiștilor
@@ -374,7 +504,7 @@ function Index() {
                   key={row[0]}
                   className={`grid grid-cols-3 ${
                     index === 0
-                      ? "bg-plum text-[11px] tracking-[0.2em] uppercase text-cream/60"
+                      ? "bg-velvet text-[11px] tracking-[0.2em] uppercase text-cream/60"
                       : "border-t border-brass/15 text-sm"
                   }`}
                 >
@@ -389,7 +519,7 @@ function Index() {
       </section>
 
       {/* NEWSLETTER */}
-      <section id="jurnal" className="bg-plum py-20">
+      <section id="jurnal" className="bg-velvet py-28">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <p className="text-brass text-[12px] tracking-[0.45em] uppercase mb-6">
             Jurnalul ANELYSÉ
@@ -398,30 +528,35 @@ function Index() {
             În spatele <span className="italic text-brasslight">fiecărui</span> fir
           </h2>
           <p className="mt-6 text-ash font-light max-w-lg mx-auto">
-            Ritualuri de îngrijire, tehnici din atelier și filozofia luxului ușor — de două ori
-            pe lună.
+            Abonează-te pentru acces prioritar la noile colecții și oferte secrete. Ritualuri
+            de îngrijire, tehnici din atelier și filozofia luxului ușor — de două ori pe lună.
           </p>
           <form
-            className="mt-9 flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
+            className="mt-10 max-w-md mx-auto"
             onSubmit={(event) => {
               event.preventDefault();
               if (email.trim()) setSubscribed(true);
             }}
           >
-            <input
-              type="email"
-              required
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-              placeholder="Adresa ta de email"
-              className="flex-1 bg-transparent border border-cream/25 px-5 py-3.5 text-cream placeholder-ash/60 text-sm focus:outline-none focus:border-brass"
-            />
-            <button className="bg-brass text-velvet px-7 py-3.5 text-[12px] tracking-[0.2em] uppercase font-medium hover:bg-brasslight transition-colors">
-              Abonează-mă
-            </button>
+            <div className="flex items-center gap-3 border-b border-cream/25 focus-within:border-brass transition-colors">
+              <input
+                type="email"
+                required
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                placeholder="Adresa ta de email"
+                className="flex-1 bg-transparent py-3.5 text-cream placeholder-ash/60 text-sm focus:outline-none"
+              />
+              <button
+                aria-label="Abonează-te"
+                className="text-brass hover:text-brasslight transition-colors p-2"
+              >
+                <ArrowRight className="w-5 h-5" strokeWidth={1.25} />
+              </button>
+            </div>
           </form>
           {subscribed && (
-            <p className="mt-4 text-brasslight text-[12px] tracking-[0.2em] uppercase">
+            <p className="mt-5 text-brasslight text-[12px] tracking-[0.2em] uppercase">
               Mulțumim — ești pe listă.
             </p>
           )}
@@ -429,8 +564,8 @@ function Index() {
       </section>
 
       {/* FOOTER */}
-      <footer className="bg-velvet border-t border-brass/20">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-14 grid grid-cols-2 md:grid-cols-4 gap-10">
+      <footer className="bg-plum border-t border-brass/20">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-16 grid grid-cols-2 md:grid-cols-4 gap-10">
           <div className="col-span-2 md:col-span-1">
             <span className="text-brass text-lg font-serif tracking-[0.35em]">ANELYSÉ</span>
             <p className="mt-4 text-ash text-sm font-light leading-relaxed">
@@ -487,6 +622,27 @@ function Index() {
             </ul>
           </div>
         </div>
+
+        {/* PAYMENT METHODS */}
+        <div className="border-t border-brass/15">
+          <div className="max-w-7xl mx-auto px-6 lg:px-10 py-7 flex flex-col sm:flex-row items-center justify-between gap-5">
+            <span className="text-ash/60 text-[10px] tracking-[0.28em] uppercase">
+              Plăți securizate
+            </span>
+            <div className="flex items-center gap-3 opacity-45">
+              {["Visa", "Mastercard", "Apple Pay", "Google Pay", "PayPal"].map((brand) => (
+                <span
+                  key={brand}
+                  className="flex items-center gap-1.5 border border-cream/25 rounded-sm px-3 py-1.5 text-cream text-[10px] tracking-[0.15em] uppercase"
+                >
+                  <CreditCard className="w-3.5 h-3.5" strokeWidth={1.25} />
+                  {brand}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+
         <div className="border-t border-brass/15">
           <div className="max-w-7xl mx-auto px-6 lg:px-10 py-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-ash/70 text-[12px] tracking-[0.1em]">
             <span>© 2026 ANELYSÉ Lashes. Toate drepturile rezervate.</span>
