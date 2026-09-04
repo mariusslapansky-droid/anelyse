@@ -137,7 +137,7 @@ function Index() {
   const addToBag = (id: string) =>
     setBag((prev) => ({ ...prev, [id]: (prev[id] ?? 0) + 1 }));
 
-  const active = testimonials[slide];
+  const active = testimonials[slide] ?? testimonials[0]!;
 
   return (
     <div className="bg-velvet">
