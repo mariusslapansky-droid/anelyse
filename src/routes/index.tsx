@@ -326,17 +326,125 @@ function Index() {
             <span className="w-px h-5 bg-brass/40" />
             <span className="text-ash text-[11px] tracking-[0.4em] uppercase">Lashes</span>
           </a>
-          <nav className="hidden md:flex items-center gap-9 text-[13px] tracking-[0.15em] uppercase text-cream/80">
-            <a className="hover:text-brasslight transition-colors" href="#signature">
-              Signature
-            </a>
-            <a className="hover:text-brasslight transition-colors" href="#pure">
-              Pure
-            </a>
-            <a className="hover:text-brasslight transition-colors" href="#produse">
-              Produse
-            </a>
-            <a className="hover:text-brasslight transition-colors" href="#jurnal">
+          <nav
+            className="hidden md:flex items-center gap-7 lg:gap-9 text-[12px] lg:text-[13px] tracking-[0.15em] uppercase text-cream/80"
+            onMouseLeave={() => setOpenMenu(null)}
+          >
+            {megaMenu.map((item) => (
+              <div
+                key={item.label}
+                onMouseEnter={() => setOpenMenu(item.label)}
+                className="relative"
+              >
+                <button
+                  className={`flex items-center gap-1.5 py-8 transition-colors ${
+                    openMenu === item.label ? "text-brasslight" : "hover:text-brasslight"
+                  }`}
+                >
+                  {item.label}
+                  <ChevronDown
+                    className={`w-3.5 h-3.5 transition-transform ${
+                      openMenu === item.label ? "rotate-180 text-brass" : "text-cream/50"
+                    }`}
+                    strokeWidth={1.5}
+                  />
+                </button>
+
+                {openMenu === item.label && (
+                  <div className="fixed left-0 right-0 top-20 z-40 border-b border-brass/25 bg-velvet/98 backdrop-blur shadow-[0_30px_60px_-20px_rgba(0,0,0,0.6)]">
+                    <div className="max-w-7xl mx-auto px-6 lg:px-10 py-10 grid grid-cols-4 gap-10">
+                      {item.columns.map((col) => (
+                        <div key={col.title}>
+                          <p className="text-[10px] tracking-[0.3em] uppercase text-ash mb-5">
+                            {col.title}
+                          </p>
+                          {col.links && (
+                            <ul className="space-y-3.5">
+                              {col.links.map((link) => (
+                                <li key={link.slug}>
+                                  <Link
+                                    to="/categorie/$slug"
+                                    params={{ slug: link.slug }}
+                                    onClick={() => setOpenMenu(null)}
+                                    className="group flex items-baseline gap-2 text-[13px] tracking-normal normal-case text-cream/80 hover:text-brasslight transition-colors"
+                                  >
+                                    <span>{link.label}</span>
+                                    {link.badge && (
+                                      <span className="text-[9px] tracking-[0.2em] uppercase border border-brass/50 text-brasslight px-1.5 py-0.5">
+                                        {link.badge}
+                                      </span>
+                                    )}
+                                  </Link>
+                                  {link.note && (
+                                    <p className="text-[11px] text-cream/40 normal-case tracking-normal mt-0.5">
+                                      {link.note}
+                                    </p>
+                                  )}
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+                          {col.tags && (
+                            <div className="space-y-6">
+                              {col.tags.map((group) => (
+                                <div key={group.title}>
+                                  <p className="text-[10px] tracking-[0.25em] uppercase text-cream/50 mb-2.5">
+                                    {group.title}
+                                  </p>
+                                  <div className="flex flex-wrap gap-1.5">
+                                    {group.items.map((tag) => (
+                                      <Link
+                                        key={tag.slug}
+                                        to="/categorie/$slug"
+                                        params={{ slug: tag.slug }}
+                                        onClick={() => setOpenMenu(null)}
+                                        className="text-[11px] tracking-[0.1em] border border-brass/30 text-cream/75 px-2.5 py-1 hover:border-brass hover:text-brasslight transition-colors"
+                                      >
+                                        {tag.label}
+                                      </Link>
+                                    ))}
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      ))}
+
+                      {item.promo && (
+                        <div className="border-l border-brass/20 pl-10">
+                          <Link
+                            to="/categorie/$slug"
+                            params={{ slug: item.promo.slug }}
+                            onClick={() => setOpenMenu(null)}
+                            className="group block"
+                          >
+                            <div className="overflow-hidden">
+                              <img
+                                src={item.promo.image}
+                                alt={item.promo.title}
+                                className="aspect-[4/5] w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                              />
+                            </div>
+                            <p className="mt-4 text-sm font-serif text-cream normal-case tracking-normal">
+                              {item.promo.title}
+                            </p>
+                            <span className="mt-1 inline-flex items-center gap-1.5 text-[11px] tracking-[0.2em] uppercase text-brasslight">
+                              {item.promo.cta}
+                              <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-1" />
+                            </span>
+                          </Link>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
+            <a
+              className="hover:text-brasslight transition-colors py-8"
+              href="#jurnal"
+            >
               Jurnal
             </a>
           </nav>
