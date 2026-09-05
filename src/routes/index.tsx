@@ -314,6 +314,7 @@ function Index() {
     setBag((prev) => ({ ...prev, [id]: (prev[id] ?? 0) + 1 }));
 
   const active = testimonials[slide] ?? testimonials[0]!;
+  const [openMenu, setOpenMenu] = useState<string | null>(null);
 
   return (
     <div className="bg-velvet">
