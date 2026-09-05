@@ -40,6 +40,181 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
+type MegaLink = { label: string; slug: string; note?: string; badge?: string };
+type MegaColumn = { title: string; links?: MegaLink[]; tags?: { title: string; items: MegaLink[] }[] };
+type MegaItem = {
+  label: string;
+  columns: MegaColumn[];
+  promo?: { image: string; title: string; slug: string; cta: string };
+};
+
+const megaMenu: MegaItem[] = [
+  {
+    label: "Extensii Gene",
+    columns: [
+      {
+        title: "Colecții",
+        links: [
+          { label: "ANELYSÉ Signature", slug: "signature", badge: "Luxury" },
+          { label: "ANELYSÉ Pure", slug: "pure", badge: "Eco-Vegan" },
+        ],
+      },
+      {
+        title: "Stil & Tehnică",
+        links: [
+          { label: "Fir cu fir (Clasic)", slug: "fir-cu-fir" },
+          { label: "Volum (2D – 6D)", slug: "volum" },
+          { label: "Mega Volum (8D+)", slug: "mega-volum" },
+          { label: "Pre-made Fans", slug: "pre-made-fans" },
+        ],
+      },
+      {
+        title: "Specificații Tehnice",
+        tags: [
+          {
+            title: "Curburi",
+            items: ["C", "CC", "D", "L", "M"].map((c) => ({
+              label: c,
+              slug: `curbura-${c.toLowerCase()}`,
+            })),
+          },
+          {
+            title: "Grosimi",
+            items: ["0.05mm", "0.07mm", "0.10mm", "0.15mm"].map((g) => ({
+              label: g,
+              slug: `grosime-${g.replace(".", "").replace("mm", "")}`,
+            })),
+          },
+        ],
+      },
+    ],
+    promo: {
+      image: product1,
+      title: "Bestseller: Signature CC",
+      slug: "signature",
+      cta: "Vezi detaliile",
+    },
+  },
+  {
+    label: "Adezivi & Lichide",
+    columns: [
+      {
+        title: "Adezivi Lash Making",
+        links: [
+          { label: "Uscare Rapidă (0.5 – 1 sec)", slug: "adeziv-uscare-rapida", note: "pentru experți" },
+          { label: "Uscare Medie (1 – 2 sec)", slug: "adeziv-uscare-medie", note: "pentru avansați" },
+          { label: "Adeziv Transparent (Clear)", slug: "adeziv-clear", note: "gene colorate sau maro" },
+        ],
+      },
+      {
+        title: "Pregătire & Retenție",
+        links: [
+          { label: "Șampon / Lash Foam", slug: "lash-foam", note: "curățare" },
+          { label: "Primer", slug: "primer", note: "degresare & deschidere cuticulă" },
+          { label: "Superbonder", slug: "superbonder", note: "polimerizare instantanee" },
+        ],
+      },
+      {
+        title: "Removere",
+        links: [
+          { label: "Remover Cremă", slug: "remover-crema", note: "cea mai sigură variantă" },
+          { label: "Remover Gel", slug: "remover-gel" },
+          { label: "Soluții curățare pensete", slug: "curatare-pensete" },
+        ],
+      },
+    ],
+  },
+  {
+    label: "Pensete & Accesorii",
+    columns: [
+      {
+        title: "Pensete Profesionale",
+        links: [
+          { label: "Pensete Volum & Mega Volum", slug: "pensete-volum", note: "tip Boot, L-shape" },
+          { label: "Pensete Izolare", slug: "pensete-izolare", note: "drepte sau ușor curbate" },
+          { label: "Pensete Fir cu Fir", slug: "pensete-clasic" },
+          { label: "Huse & Suporturi magnetice", slug: "suporturi-pensete" },
+        ],
+      },
+      {
+        title: "Consumabile Aplicare",
+        links: [
+          { label: "Plasturi cu Hidrogel", slug: "plasturi-hidrogel", note: "eye patches" },
+          { label: "Benzi Medicale (Tapes)", slug: "benzi-medicale", note: "silicon, microfoam, hârtie" },
+          { label: "Periuțe & Microbrush-uri", slug: "periute-microbrush" },
+          { label: "Accesorii Adeziv", slug: "accesorii-adeziv", note: "piatră de jad, inele, folii" },
+        ],
+      },
+      {
+        title: "Igienă & Organizare",
+        links: [
+          { label: "Dezinfectanți & Sterilizare", slug: "dezinfectanti" },
+          { label: "Palete de lucru (Lash Boards)", slug: "lash-boards" },
+          { label: "Echipamente Salon", slug: "echipamente-salon", note: "higrometre, mini-ventilatoare" },
+        ],
+      },
+    ],
+  },
+  {
+    label: "Seturi & Oferte",
+    columns: [
+      {
+        title: "Kituri Start & Testare",
+        links: [
+          { label: "Discovery Kit", slug: "discovery-kit", note: "mix Signature + Pure + adeziv tester" },
+          { label: "Kit Începători / Classic 1D", slug: "kit-incepatori" },
+          { label: "Kit Avansați / Volum Rusesc", slug: "kit-volum-rusesc" },
+          { label: "Kit pentru Academii", slug: "kit-academii", note: "pachete bulk pentru traineri" },
+        ],
+      },
+      {
+        title: "Sisteme & Bundle-uri",
+        links: [
+          { label: "Sistem Retenție Maximă", slug: "sistem-retentie", note: "spumă + primer + adeziv + superbonder" },
+          { label: "Pachetul „Arhitectura Privirii”", slug: "pachet-arhitectura-privirii" },
+          { label: "Bundle Consumabile (5+1 Gratuit)", slug: "bundle-consumabile" },
+        ],
+      },
+      {
+        title: "Oferte Exclusive",
+        links: [
+          { label: "Oferta Lunii", slug: "oferta-lunii" },
+          { label: "Last Chance / Sale", slug: "sale" },
+        ],
+      },
+    ],
+  },
+  {
+    label: "Lash Hub",
+    columns: [
+      {
+        title: "Academie",
+        links: [
+          { label: "Cursuri de Bază (1–3D)", slug: "cursuri-baza" },
+          { label: "Masterclass Volum & Mega-Volum", slug: "masterclass-volum" },
+          { label: "Calendar Evenimente", slug: "evenimente", note: "seminarii & workshopuri" },
+        ],
+      },
+      {
+        title: "Resurse Tehnice",
+        links: [
+          { label: "Ghidul de Retenție Definitiv", slug: "ghid-retentie" },
+          { label: "Fișa Tehnică a Produselor", slug: "fise-tehnice", note: "curburi, compoziție, adezivi" },
+          { label: "Scheme de Mapping", slug: "scheme-mapping", note: "Fox eye, Squirrel, Kim K" },
+        ],
+      },
+      {
+        title: "Tutoriale & Tips",
+        links: [
+          { label: "Tutoriale Video", slug: "tutoriale-video", note: "tehnici de aplicare & izolare" },
+          { label: "Totul despre Extensii de Gene", slug: "blog" },
+          { label: "Întrebări Frecvente (FAQ)", slug: "faq" },
+        ],
+      },
+    ],
+  },
+];
+
 type Product = {
   id: string;
   name: string;
